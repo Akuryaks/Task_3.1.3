@@ -9,13 +9,13 @@
 <div>
     <form th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
         <br>
-        <input th:field="*{firstName}" type="text" name="firstName" placeholder="Имя" required="">
+        <input th:field="*{firstName}" type="text" name="firstName" placeholder="Имя" required>
         <br>
-        <input th:field="*{lastName}" type="text" name="lastName" placeholder="Фамилия" required="">
+        <input th:field="*{lastName}" type="text" name="lastName" placeholder="Фамилия" required>
         <br>
-        <input th:field="*{email}" type="text" name="lastName" placeholder="Email" required="">
+        <input th:field="*{email}" type="text" name="lastName" placeholder="Email" required>
         <br>
-        <input th:field="*{password}" type="text" name="lastName" placeholder="Пароль" required="">
+        <input th:field="*{password}" type="text" name="lastName" placeholder="Пароль" required>
         <br>
         <input type="submit" value="Обновить"/>
         <br>

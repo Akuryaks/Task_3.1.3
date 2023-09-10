@@ -18,20 +18,18 @@ import java.util.*;
 @Transactional(readOnly = true)
 public class UsersService implements UserDetailsService {
     private final UsersRepository usersRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    public UsersService(UsersRepository usersRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UsersService(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public List<User> findAll(){
         return usersRepository.findAll();
     }
 
-    public User findOne(long id){
+    public Optional<User> findOne(long id){
         Optional<User> user = usersRepository.findById(id);
-        return user.orElse(null);
+        return user;
     }
 
     @Transactional
