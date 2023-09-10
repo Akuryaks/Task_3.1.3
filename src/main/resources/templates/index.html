@@ -1,11 +1,35 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <title>Пользователи</title>
 </head>
 <body>
-<h1>Welcome to Index PAGE!</h1>
-
-
+<table>
+    <thead>
+    <tr>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Возраст</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getFirstName()}"></td>
+        <td th:text="${user.getLastName()}"></td>
+        <td>
+        <br>
+        <a th:href="@{admin/edit/{id}(id=${user.getId()})}">Изменить</a>
+        <br>
+        <form th:method="DELETE" th:action="@{admin/{id}(id=${user.getId()})}">
+            <input type="submit" value="Удалить" onclick="return confirm('Вы уверены?')"/>
+        </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="admin/new">Добавить пользователя</a>
+<div th:insert="~{fragments/logout :: logout}"></div>
 </body>
 </html>
