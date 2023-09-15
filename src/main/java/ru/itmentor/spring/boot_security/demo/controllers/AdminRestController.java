@@ -1,45 +1,35 @@
 package ru.itmentor.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.itmentor.spring.boot_security.demo.model.User;
 import ru.itmentor.spring.boot_security.demo.services.UsersService;
 
-import java.util.List;
-
-@org.springframework.web.bind.annotation.RestController
+@RestController
 @RequestMapping("/api/users")
-public class RestController {
-
+public class AdminRestController {
     private final UsersService usersService;
-
     @Autowired
-    public RestController(UsersService usersService) {
+    public AdminRestController(UsersService usersService) {
         this.usersService = usersService;
     }
 
-    @GetMapping
-    private List<User> all(){
-        return usersService.findAll();
-    }
-
-    @PostMapping
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
     private void newUser(@RequestBody User newUser) {
         usersService.saveUser(newUser);
     }
 
-    @GetMapping("/{id}")
-    private User findById(@PathVariable Long id){
-        return usersService.findOne(id).orElseThrow(() -> new RuntimeException("Could not find user " + id));
-    }
-
     @PutMapping("/{id}")
-    private void replace(@RequestBody User user, @PathVariable Long id) {
+    private ResponseEntity<HttpStatus> replace(@RequestBody User user, @PathVariable Long id) {
         usersService.updateUser(id, user);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    void delete(@PathVariable Long id) {
+    private void delete(@PathVariable Long id) {
         usersService.deleteUser(id);
     }
 }
